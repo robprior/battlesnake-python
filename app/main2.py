@@ -7,9 +7,22 @@ import bottle
 import os
 import random
 
+FOOD = 10
+SNAKE = 11
+ID = "our ID"
 
-SNAKE = 1
-FOOD  = 2
+def collect_data(data):
+    grid = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
+        for s in data['snakes']:
+            if s['id'] == ID:
+                my_snake = s
+
+        for coords in my_snake['coord']:
+            grid[coord[0]][coord[1]] = SNAKE
+
+        for in data['food']:
+            f[0]f[1] = FOOD
+
 def wall_protection(data):
     # If we are heading towards right or left wall.
     if my_snake['coord'][0][0] == data['width'] or my_snake['coord'][0][0] == -data['width']:
@@ -17,23 +30,6 @@ def wall_protection(data):
     # If we are heading towards the top or bottom wall
     elif my_snake['coord'][0][0] == data['height'] or my_snake['coord'][0][0] == -data['height']:
         # Move left or right
-
-def readBoard(data):
-    board = [[0 for col in xrange(data['width'])] for row in xrange(data['height'])]
-    for snake in data['snakes']:
-        for co in snake['coords']:
-            board[co[1]][co[0]] = SNAKE
-    for kibble in data['food']:
-         board[kibble[1]][kibble[0]] = FOOD
-    for row in board:
-        print row
-
-
-def find_food(data):
-    for f in data['food']:
-        grid[f[0]][f[1]] = FOOD
-
-
 def snake_length(snake):
     return len(snake.coords)
 
@@ -46,13 +42,6 @@ def snake_direction(snake):
         (1,0):'right',
         (-1,0):'left'
         }[sdir]
-
-def in_bounds(width, height, coords):
-    if (coords[0] > width) or (coords[0] < 0):
-        return 0
-    if (coords[1] > height) or (coords[1] < 0):
-        return 0
-    return 1
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -85,12 +74,9 @@ def start():
 def move():
     
     data = bottle.request.json
-
-    readBoard(data)
     
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
-
 
     # if we are travelling in direction 'key' then we cannot go directon 'value'
     # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
@@ -107,14 +93,9 @@ def move():
             'move': random.choice(directions),
             'taunt': 'For a mewment like this, some people wait a lifetime'
         }
-<<<<<<< Updated upstream
-
-    move = random.choice(directions)    
-=======
     
 <<<<<<< Updated upstream
     move = random.choice(directions)
->>>>>>> Stashed changes
     while move == bad_directions[snake_direction(my_snake)]:
         move = random.choice(directions)
 =======
@@ -146,10 +127,10 @@ def makeboard(rows, cols):
         board.append(brow)
     return board
 
-#b = makeboard(20,20)
+b = makeboard(20,20)
 
-#for row in b:
-#    print ' '.join(row)
+for row in b:
+    print ' '.join(row)
     
     
     

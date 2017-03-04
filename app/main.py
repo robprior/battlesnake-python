@@ -2,10 +2,6 @@ import bottle
 import os
 import random
 
-# if we are travelling in direction 'key' then we cannot go directon 'value'
-# ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
-bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
-
 def parseData(data):
     snakeData = []
 
@@ -53,9 +49,28 @@ def move():
     data = bottle.request.json
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
+
+    # if we are travelling in direction 'key' then we cannot go directon 'value'
+    # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
+    bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
+
+    my_snake = {}
+    for snake in data['snakes']:
+        if snake.id == data['you']:
+            my_snake = snake
+            break
+
+    if data['turn'] == 0:
+        return {
+            'move': random.choice(directions),
+            'taunt': 'battlesnake-python!'
+        }
+    moves = random.choice(directions)
+    if moves[0] == bad_directions[snake_direction(my_snake)]:
+        del moves[0]
     
     return {
-        'move': random.choice(directions),
+        'move': moves[0],
         'taunt': 'battlesnake-python!'
     }
 

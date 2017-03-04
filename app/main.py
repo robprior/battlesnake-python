@@ -13,6 +13,12 @@ def snake_direction(snake):
             return 'right'
         return 'left'
 
+def snake_lengths(snakes):
+    threats = []
+    for snake in snakes:
+        threats[snake.id] = snake.coords.length()
+    return threats.sort()
+
 @bottle.route('/static/<path:path>')
 def static(path):
     return bottle.static_file(path, root='static/')

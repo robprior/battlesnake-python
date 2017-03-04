@@ -3,9 +3,15 @@ import os
 import random
 
 
-# Hi Gillian here
-#areg here
-# Rafay
+def snake_direction(snake):
+    if snake.coords[0][0] != snake.coords[1][0]:
+        if snake.coords[0][0] > snake.coords[1][0]:
+            return 'down'
+        return 'up'
+    if snake.coords[0][1] != snake.coords[1][1]:
+        if snake.coords[0][1] > snake.coords[1][1]:
+            return 'right'
+        return 'left'
 
 @bottle.route('/static/<path:path>')
 def static(path):

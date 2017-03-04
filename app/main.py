@@ -7,6 +7,12 @@ import bottle
 import os
 import random
 
+def readBoard(data):
+    board = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
+    for snake in data['snakes']:
+        for co in snake['coords']:
+            print ' '
+
 def snake_length(snake):
     return len(snake.coords)
 

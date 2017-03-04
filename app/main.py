@@ -46,6 +46,8 @@ def start():
         'taunt': 'Cash meowside how bout dat'.format(game_id, board_width, board_height),
         'head_url': head_url,
         'name': 'longCat'
+        'tail_type': "curled"
+        'head_type': "tongue"
     }
 
 @bottle.post('/move')

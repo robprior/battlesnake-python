@@ -73,14 +73,14 @@ def move():
     for snake in data['snakes']:
         if snake['id'] == data['you']:
             my_snake = snake
-            print "My sanke is"
+            print "My snake is"
             print my_snake
             break
 
     if data['turn'] == 0:
         return {
             'move': random.choice(directions),
-            'taunt': 'battlesnake-python!'
+            'taunt': 'For a mewment like this, some people wait a lifetime'
         }
     
     moves = random.choice(directions)
@@ -89,7 +89,7 @@ def move():
     
     return {
         'move': moves[0],
-        'taunt': 'battlesnake-python!'
+        'taunt': 'You’ve cat to be kitten me right meow'
     }
 
 #board

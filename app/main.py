@@ -2,8 +2,19 @@ import bottle
 import os
 import random
 
+
+# Constants
+EMPTY = 0
+SNAKE = 1
+FOOOD = 2
 def parseData(data):
-    snakeData = []
+    grid = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
+    listOfSnake = data['snakes']
+    print grid
+    print '\n'
+    print '\n'
+    print listOfSnake
+    
 
 def snake_direction(snake):
     if snake.coords[0][0] != snake.coords[1][0]:
@@ -45,6 +56,8 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+
+    grid = parseData(data)
 
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']

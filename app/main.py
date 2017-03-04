@@ -7,12 +7,17 @@ import bottle
 import os
 import random
 
+SNAKE = 1
+FOOD  = 2
 def readBoard(data):
     board = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
     for snake in data['snakes']:
         for co in snake['coords']:
-            board[co[0]][co[1]] = 1
-    print board
+            board[co[0]][co[1]] = SNAKE
+    for kibble in data['food']:
+         board[kibble[0]][kibble[1]] = FOOD
+    for row in board
+        print col
 
 def snake_length(snake):
     return len(snake.coords)

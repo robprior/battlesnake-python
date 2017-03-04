@@ -19,13 +19,13 @@ def snake_length(snake):
     return len(snake.coords)
 
 def snake_direction(snake):
-    sdir = [snake['coords'][0][0] - snake['coords'][1][0], snake['coords'][0][1] - snake['coords'][1][1]]
+    sdir = (snake['coords'][0][0] - snake['coords'][1][0], snake['coords'][0][1] - snake['coords'][1][1])
     return {
-        [0,0]:'FIRSTMOVE',
-        [0,1]:'down',
-        [0,-1]:'up',
-        [1,0]:'right',
-        [-1,0]:'left'
+        (0,0):'FIRSTMOVE',
+        (0,1):'down',
+        (0,-1):'up',
+        (1,0):'right',
+        (-1,0):'left'
         }[sdir]
 
 @bottle.route('/static/<path:path>')

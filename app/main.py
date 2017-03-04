@@ -48,7 +48,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': 'Cash meowside how bout dat'.format(game_id, board_width, board_height),
+        'taunt': 'Cash meowside how bout dat',
         'head_url': head_url,
         'name': 'longCat',
         'tail_type': "curled",
@@ -89,7 +89,7 @@ def move():
     
     return {
         'move': moves[0],
-        'taunt': "You've cat to be kitten me right meow"
+        'taunt': "Youve cat to be kitten me right meow"
     }
 
 #board

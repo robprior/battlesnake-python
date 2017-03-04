@@ -9,7 +9,7 @@ def snake_length(snake):
     return len(snake.coords)
 
 def snake_direction(snake):
-    sdir = [snake.coords[0].x - snake.coords[1].x, snake.coords[0].y - snake.coords[1].y]
+    sdir = [snake['coords'][0]['x'] - snake['coords'][1]['x'], snake['coords'][0]['y'] - snake['coords'][1]['y']]
     return {
         [0,0]:'FIRSTMOVE',
         [0,1]:'down',

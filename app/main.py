@@ -16,20 +16,22 @@ def parseData(data):
     print listOfSnake
     
 
+def snake_length(snake):
+    return len(snake.coords)
+
 def snake_direction(snake):
-    if snake.coords[0][0] != snake.coords[1][0]:
-        if snake.coords[0][0] > snake.coords[1][0]:
-            return 'down'
-        return 'up'
-    if snake.coords[0][1] != snake.coords[1][1]:
-        if snake.coords[0][1] > snake.coords[1][1]:
-            return 'right'
-        return 'left'
+    sdir = [snake.coords[0].x - snake.coords[1].x, snake.coords[0].y - snake.coords[1].y]
+    return {
+        [0,0]:'FIRSTMOVE',
+        [0,1]:'down',
+        [0,-1]:'up',
+        [1,0]:'right',
+        [-1,0]:'left'
+        }[sdir]
 
 @bottle.route('/static/<path:path>')
 def static(path):
     return bottle.static_file(path, root='static/')
-
 
 @bottle.post('/start')
 def start():
@@ -52,9 +54,9 @@ def start():
         'name': 'battlesnake-python'
     }
 
-
 @bottle.post('/move')
 def move():
+    
     data = bottle.request.json
 
     grid = parseData(data)
@@ -62,10 +64,55 @@ def move():
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
 
+    # if we are travelling in direction 'key' then we cannot go directon 'value'
+    # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
+    bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
+
+    my_snake = {}
+    for snake in data['snakes']:
+        if snake.id == data['you']:
+            my_snake = snake
+            break
+
+    if data['turn'] == 0:
+        return {
+            'move': random.choice(directions),
+            'taunt': 'battlesnake-python!'
+        }
+    moves = random.choice(directions)
+    if moves[0] == bad_directions[snake_direction(my_snake)]:
+        del moves[0]
+    
     return {
-        'move': random.choice(directions),
+        'move': moves[0],
         'taunt': 'battlesnake-python!'
     }
+
+#board
+def makeboard(rows, cols):
+    board = []
+    for r in range(rows):
+        brow = []
+        for c in range(cols):
+            if r == c == 0:
+                 brow.append(' ')
+            elif r == 0:
+                 brow.append(str(c-1))
+            elif c == 0:
+                 brow.append(str(r-1))
+            else:
+                 brow.append('*')
+        board.append(brow)
+    return board
+
+b = makeboard(20,20)
+
+for row in b:
+    print ' '.join(row)
+    
+    
+    
+    ##
 
 
 # Expose WSGI app (so gunicorn can find it)

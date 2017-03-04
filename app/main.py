@@ -11,7 +11,8 @@ def readBoard(data):
     board = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
     for snake in data['snakes']:
         for co in snake['coords']:
-            print ' '
+            board[co[0]][co[1]] = 1
+    print board
 
 def snake_length(snake):
     return len(snake.coords)
@@ -57,6 +58,8 @@ def start():
 def move():
     
     data = bottle.request.json
+
+    readBoard(data)
     
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']

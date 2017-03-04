@@ -2,29 +2,26 @@ import bottle
 import os
 import random
 
-def parseData(data):
-    snakeData = []
+# if we are travelling in direction 'key' then we cannot go directon 'value'
+# ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
+bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
+
+def snake_length(snake):
+    return len(snake.coords)
 
 def snake_direction(snake):
-    if snake.coords[0][0] != snake.coords[1][0]:
-        if snake.coords[0][0] > snake.coords[1][0]:
-            return 'down'
-        return 'up'
-    if snake.coords[0][1] != snake.coords[1][1]:
-        if snake.coords[0][1] > snake.coords[1][1]:
-            return 'right'
-        return 'left'
-
-def snake_lengths(snakes):
-    threats = []
-    for snake in snakes:
-        threats[snake.id] = snake.coords.length()
-    return threats.sort()
+    sdir = [snake.coords[0].x - snake.coords[1].x, snake.coords[0].y - snake.coords[1].y]
+    return {
+        [0,0]:'FIRSTMOVE',
+        [0,1]:'down',
+        [0,-1]:'up',
+        [1,0]:'right',
+        [-1,0]:'left'
+        }[sdir]
 
 @bottle.route('/static/<path:path>')
 def static(path):
     return bottle.static_file(path, root='static/')
-
 
 @bottle.post('/start')
 def start():
@@ -47,7 +44,6 @@ def start():
         'name': 'battlesnake-python'
     }
 
-
 @bottle.post('/move')
 def move():
     data = bottle.request.json
@@ -59,7 +55,6 @@ def move():
         'move': random.choice(directions),
         'taunt': 'battlesnake-python!'
     }
-
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()

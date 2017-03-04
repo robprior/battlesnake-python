@@ -13,9 +13,9 @@ def readBoard(data):
     board = [[0 for col in xrange(data['width'])] for row in xrange(data['height'])]
     for snake in data['snakes']:
         for co in snake['coords']:
-            board[co[0]][co[1]] = SNAKE
+            board[co[1]][co[0]] = SNAKE
     for kibble in data['food']:
-         board[kibble[0]][kibble[1]] = FOOD
+         board[kibble[1]][kibble[0]] = FOOD
     for row in board:
         print row
 

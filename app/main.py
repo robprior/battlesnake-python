@@ -2,19 +2,8 @@ import bottle
 import os
 import random
 
-
-# Constants
-EMPTY = 0
-SNAKE = 1
-FOOOD = 2
 def parseData(data):
-    grid = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
-    listOfSnake = data['snakes']
-    print grid
-    print '\n'
-    print '\n'
-    print listOfSnake
-    
+    snakeData = []
 
 def snake_length(snake):
     return len(snake.coords)
@@ -58,9 +47,6 @@ def start():
 def move():
     
     data = bottle.request.json
-
-    grid = parseData(data)
-
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
 
@@ -70,7 +56,7 @@ def move():
 
     my_snake = {}
     for snake in data['snakes']:
-        if snake.id == data['you']:
+        if snake['id'] == data['you']:
             my_snake = snake
             break
 
@@ -79,6 +65,7 @@ def move():
             'move': random.choice(directions),
             'taunt': 'battlesnake-python!'
         }
+    
     moves = random.choice(directions)
     if moves[0] == bad_directions[snake_direction(my_snake)]:
         del moves[0]

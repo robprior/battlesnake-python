@@ -16,7 +16,7 @@ def readBoard(data):
             board[co[0]][co[1]] = SNAKE
     for kibble in data['food']:
          board[kibble[0]][kibble[1]] = FOOD
-    for row in board
+    for row in board:
         print col
 
 def snake_length(snake):

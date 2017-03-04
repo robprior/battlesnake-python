@@ -107,22 +107,22 @@ def move():
             'move': random.choice(directions),
             'taunt': 'For a mewment like this, some people wait a lifetime'
         }
-<<<<<<< Updated upstream
+
 
     move = random.choice(directions)    
-=======
+
     
-<<<<<<< Updated upstream
+
     move = random.choice(directions)
->>>>>>> Stashed changes
+
     while move == bad_directions[snake_direction(my_snake)]:
         move = random.choice(directions)
-=======
+
     moves = random.shuffle(directions)
     if moves[0] == bad_directions[snake_direction(my_snake)]:
         del moves[0]
 
->>>>>>> Stashed changes
+
     
     return {
         'move': move,

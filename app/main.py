@@ -2,8 +2,11 @@ import bottle
 import os
 import random
 
+<<<<<<< Updated upstream
 def parseData(data):
     snakeData = []
+=======
+>>>>>>> Stashed changes
 
 def snake_direction(snake):
     if snake.coords[0][0] != snake.coords[1][0]:
@@ -15,11 +18,14 @@ def snake_direction(snake):
             return 'right'
         return 'left'
 
+<<<<<<< Updated upstream
 def snake_lengths(snakes):
     threats = []
     for snake in snakes:
         threats[snake.id] = snake.coords.length()
     return threats.sort()
+=======
+>>>>>>> Stashed changes
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -50,8 +56,8 @@ def start():
 
 @bottle.post('/move')
 def move():
+    
     data = bottle.request.json
-
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
 

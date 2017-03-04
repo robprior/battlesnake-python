@@ -89,7 +89,7 @@ def move():
     
     return {
         'move': moves[0],
-        'taunt': 'You’ve cat to be kitten me right meow'
+        'taunt': "You've cat to be kitten me right meow"
     }
 
 #board

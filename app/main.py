@@ -34,7 +34,7 @@ def start():
 def move():
     data = bottle.request.json
 
-    # TODO: Do things with data and stuff for this test commit and now I changed it from c9
+    # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
 
     return {

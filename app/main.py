@@ -6,6 +6,22 @@ sys.path.append('/usr/local/lib/python3.6/site-packages')
 import bottle
 import os
 import random
+import 
+
+tList = [ 'Cash meowside how bout dat',
+				'Cash meowside how bout dat',
+				'Youve cat to be kitten me right meow',
+				'Are you fur-real ?',
+				'For a mewment like this, some people wait a lifetime',
+				'Paw-lease',
+				'I’ve cat to say, I’m not feline that way',
+				'No need to have a hissy fit',
+				'You’re pawful',
+				'Let’s purrtend that never happened',
+				'I don’t like your cattitude',
+				'Your pissing meowff',
+				'Happy Caturday']
+
 
 
 SNAKE = 1
@@ -74,7 +90,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': 'Cash meowside how bout dat',
+        'taunt': random.choice[tList],
         'head_url': head_url,
         'name': 'longCat',
         'tail_type': "curled",
@@ -105,7 +121,7 @@ def move():
     if data['turn'] == 0:
         return {
             'move': random.choice(directions),
-            'taunt': 'For a mewment like this, some people wait a lifetime'
+            'taunt': random.choice[tList]
         }
 
 
@@ -126,7 +142,7 @@ def move():
     
     return {
         'move': move,
-        'taunt': "Youve cat to be kitten me right meow"
+        'taunt': random.choice[tList]
     }
 
 #board

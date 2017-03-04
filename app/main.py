@@ -6,6 +6,9 @@ import random
 # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
 bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
 
+def parseData(data):
+    snakeData = []
+
 def snake_length(snake):
     return len(snake.coords)
 
@@ -46,15 +49,42 @@ def start():
 
 @bottle.post('/move')
 def move():
+    
     data = bottle.request.json
-
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
-
+    
     return {
         'move': random.choice(directions),
         'taunt': 'battlesnake-python!'
     }
+
+#board
+def makeboard(rows, cols):
+    board = []
+    for r in range(rows):
+        brow = []
+        for c in range(cols):
+            if r == c == 0:
+                 brow.append(' ')
+            elif r == 0:
+                 brow.append(str(c-1))
+            elif c == 0:
+                 brow.append(str(r-1))
+            else:
+                 brow.append('*')
+        board.append(brow)
+    return board
+
+b = makeboard(20,20)
+
+for row in b:
+    print ' '.join(row)
+    
+    
+    
+    ##
+
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()

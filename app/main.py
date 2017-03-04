@@ -7,14 +7,6 @@ import bottle
 import os
 import random
 
-def parseData(data):
-    grid = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
-    listOfSnake = data['snakes']
-    print grid
-    print '\n'
-    print '\n'
-    print listOfSnake
-
 def snake_length(snake):
     return len(snake.coords)
 
@@ -59,8 +51,6 @@ def start():
 def move():
     
     data = bottle.request.json
-
-    parseData(data)
     
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
@@ -73,8 +63,6 @@ def move():
     for snake in data['snakes']:
         if snake['id'] == data['you']:
             my_snake = snake
-            print "My snake is"
-            print my_snake
             break
 
     if data['turn'] == 0:

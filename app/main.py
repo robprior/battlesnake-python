@@ -32,6 +32,13 @@ def snake_direction(snake):
         (-1,0):'left'
         }[sdir]
 
+def in_bounds(width, height, coords):
+    if (coords[0] > width) or (coords[0] < 0):
+        return 0
+    if (coords[1] > height) or (coords[1] < 0):
+        return 0
+    return 1
+
 @bottle.route('/static/<path:path>')
 def static(path):
     return bottle.static_file(path, root='static/')
@@ -69,6 +76,7 @@ def move():
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
 
+
     # if we are travelling in direction 'key' then we cannot go directon 'value'
     # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
     bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
@@ -85,7 +93,6 @@ def move():
             'taunt': 'For a mewment like this, some people wait a lifetime'
         }
     
-    move = random.choice(directions)
     while move == bad_directions[snake_direction(my_snake)]:
         move = random.choice(directions)
     

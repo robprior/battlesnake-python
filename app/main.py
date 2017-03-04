@@ -82,10 +82,11 @@ def makeboard(rows, cols):
         board.append(brow)
     return board
 
-b = makeboard(4,3)
+b = makeboard(20,20)
 
 for row in b:
     print ' '.join(row)
+    
     
     
     ##

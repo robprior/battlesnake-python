@@ -34,7 +34,7 @@ def start():
 def move():
     data = bottle.request.json
 
-    # TODO: Do things with data
+    # TODO: Do things with data and stuff for this test commit
     directions = ['up', 'down', 'left', 'right']
 
     return {

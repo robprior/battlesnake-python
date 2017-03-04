@@ -92,7 +92,8 @@ def move():
             'move': random.choice(directions),
             'taunt': 'For a mewment like this, some people wait a lifetime'
         }
-    
+
+    move = random.choice(directions)    
     while move == bad_directions[snake_direction(my_snake)]:
         move = random.choice(directions)
     

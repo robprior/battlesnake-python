@@ -4,6 +4,7 @@ import random
 
 
 # Hi Gillian here
+#areg here
 
 
 @bottle.route('/static/<path:path>')

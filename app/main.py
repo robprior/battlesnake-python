@@ -39,7 +39,7 @@ def start():
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
-
+	
     head_url = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
@@ -49,7 +49,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
+        'taunt': 'Cash meowside how bout dat'.format(game_id, board_width, board_height),
         'head_url': head_url,
         'name': 'battlesnake-python'
     }

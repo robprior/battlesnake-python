@@ -10,12 +10,12 @@ import random
 SNAKE = 1
 FOOD  = 2
 def readBoard(data):
-    board = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
+    board = [[0 for col in xrange(data['width'])] for row in xrange(data['height'])]
     for snake in data['snakes']:
         for co in snake['coords']:
-            board[co[1]][co[0]] = SNAKE
+            board[co[0]][co[1]] = SNAKE
     for kibble in data['food']:
-         board[kibble[1]][kibble[0]] = FOOD
+         board[kibble[0]][kibble[1]] = FOOD
     for row in board:
         print row
 

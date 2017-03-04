@@ -2,6 +2,7 @@ import bottle
 import os
 import random
 
+#Testing by Rafay
 
 def snake_direction(snake):
     if snake.coords[0][0] != snake.coords[1][0]:

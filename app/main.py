@@ -83,7 +83,7 @@ def move():
             'taunt': 'For a mewment like this, some people wait a lifetime'
         }
     
-    moves = random.choice(directions)
+    moves = random.shuffle(directions)
     if moves[0] == bad_directions[snake_direction(my_snake)]:
         del moves[0]
     

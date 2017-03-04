@@ -65,6 +65,31 @@ def move():
         'taunt': 'battlesnake-python!'
     }
 
+#board
+def makeboard(rows, cols):
+    board = []
+    for r in range(rows):
+        brow = []
+        for c in range(cols):
+            if r == c == 0:
+                 brow.append(' ')
+            elif r == 0:
+                 brow.append(str(c-1))
+            elif c == 0:
+                 brow.append(str(r-1))
+            else:
+                 brow.append('*')
+        board.append(brow)
+    return board
+
+b = makeboard(4,3)
+
+for row in b:
+    print ' '.join(row)
+    
+    
+    ##
+
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()

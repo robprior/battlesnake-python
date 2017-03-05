@@ -60,7 +60,6 @@ def snake_length(snake):
 def snake_direction(snake):
     sdir = (snake['coords'][0][0] - snake['coords'][1][0], snake['coords'][0][1] - snake['coords'][1][1])
     return {
-        (0,0):'FIRSTMOVE',
         (0,1):'down',
         (0,-1):'up',
         (1,0):'right',
@@ -153,7 +152,8 @@ def move():
 
     # make a new list from the old list (both called possibleDirs)
     # only re add items to the list if it is not a bad direction
-    possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
+    if not data['turn'] == 0:
+        possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
 
     print '*********'
     print "possible dirs without back"

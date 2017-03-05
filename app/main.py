@@ -134,6 +134,8 @@ def move():
     print '*********'
     print "Our coords"
 
+    ourCoords = ourCoords[0]
+
     print ourCoords
     
     # testing finding the head

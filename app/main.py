@@ -165,19 +165,19 @@ def move():
     # check over the remaining directions
     for dirs in possibleDirs:
         if dirs == 'left':
-            newPos = ourCoord[1] - 1
+            newPos = ourCoords[1] - 1
             if newPos < 0 or board[newPos][ourCoords[0]] == 1:
                del dirs
         elif dirs == 'right':
-            newPos = ourCoord[1] + 1
+            newPos = ourCoords[1] + 1
             if newPos >= data['width'] or board[newPos][ourCoords[0]] == 1:
                del dirs
         elif dirs == 'up':
-            newPos = ourCoord[0] - 1
+            newPos = ourCoords[0] - 1
             if newPos < 0 or board[ourCoords[1]][newPos] == 1:
                del dirs
         elif dirs == 'down':
-            newPos = ourCoord[0] + 1
+            newPos = ourCoords[0] + 1
             if newPos < 0 or board[ourCoords[1]][newPos] == 1:
                del dirs
     #while move == bad_directions[snake_direction(my_snake)]:

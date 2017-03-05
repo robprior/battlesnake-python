@@ -146,9 +146,19 @@ def move():
 
     #move = random.choice(directions)
 
+    print '*********'
+    print "possible dirs"
+
+    print possibleDirs
+
     # make a new list from the old list (both called possibleDirs)
     # only re add items to the list if it is not a bad direction
     possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
+
+    print '*********'
+    print "possible dirs without back"
+
+    print possibleDirs
 
     ourCoords = my_snake['coords']
 

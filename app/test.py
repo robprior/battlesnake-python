@@ -6,28 +6,53 @@ sys.path.append('/usr/local/lib/python3.6/site-packages')
 import bottle
 import os
 import random
+import copy
+
+tList = [ 'Cash meowside how bout dat',
+				'Cash meowside how bout dat',
+				'Youve cat to be kitten me right meow',
+				'Are you fur-real ?',
+				'For a mewment like this, some people wait a lifetime',
+				'Paw-lease',
+				'Ive cat to say, Im not feline that way',
+				'No need to have a hissy fit',
+				'Youre pawful',
+				'Lets purrtend that never happened',
+				'I dont like your cattitude',
+				'Your pissing meowff',
+				'Happy Caturday']
+
+
 
 SNAKE = 1
 FOOD  = 2
-SAFETY = 3
-WALL = 4
-
-def wall_protection(data):
+#def wall_protection(data):
     # If we are heading towards right or left wall.
-    if my_snake['coord'][0][0] == data['width'] or my_snake['coord'][0][0] == -data['width']:
+    #if my_snake['coord'][0][0] == data['width'] or my_snake['coord'][0][0] == -data['width']:
         # Move up or down
     # If we are heading towards the top or bottom wall
-    elif my_snake['coord'][0][0] == data['height'] or my_snake['coord'][0][0] == -data['height']:
+    #elif my_snake['coord'][0][0] == data['height'] or my_snake['coord'][0][0] == -data['height']:
         # Move left or right
 
-def readBoard(data, snake):
+def parseBoard(data):
+    my_snake = {}
     board = [[0 for col in xrange(data['width'])] for row in xrange(data['height'])]
-    for co in snake['coords']:
-        board[co[1]][co[0]] = SNAKE
+    for snake in data['snakes']:
+        if snake['id'] == data['you']:
+            my_snake = snake
+        for co in snake['coords']:
+            board[co[1]][co[0]] = SNAKE
     for kibble in data['food']:
          board[kibble[1]][kibble[0]] = FOOD
-    for row in board:
-        print row
+    #for row in board:
+    #    print row
+    return my_snake, board
+
+
+def find_food(data):
+    for f in data['food']:
+        grid[f[0]][f[1]] = FOOD
+
 
 def snake_length(snake):
     return len(snake.coords)
@@ -35,7 +60,6 @@ def snake_length(snake):
 def snake_direction(snake):
     sdir = (snake['coords'][0][0] - snake['coords'][1][0], snake['coords'][0][1] - snake['coords'][1][1])
     return {
-        (0,0):'FIRSTMOVE',
         (0,1):'down',
         (0,-1):'up',
         (1,0):'right',
@@ -59,7 +83,7 @@ def start():
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
-    
+	
     head_url = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
@@ -69,7 +93,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': 'Cash meowside how bout dat',
+        'taunt': random.choice(tList),
         'head_url': head_url,
         'name': 'longCat',
         'tail_type': "curled",
@@ -78,7 +102,6 @@ def start():
 
 @bottle.post('/move')
 def move():
-    
     
     data = bottle.request.json
     
@@ -134,6 +157,8 @@ def move():
         'move': move,
         'taunt': random.choice(tList)
     }
+
+
 #board
 def makeboard(rows, cols):
     board = []

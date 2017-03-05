@@ -161,8 +161,6 @@ def move():
 
     print possibleDirs
 
-    ourCoords = my_snake['coords']
-
     # check over the remaining directions
     for dirs in possibleDirs:
         if dirs == 'left':

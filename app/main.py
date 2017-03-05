@@ -153,7 +153,8 @@ def move():
     # make a new list from the old list (both called possibleDirs)
     # only re add items to the list if it is not a bad direction
     if not data['turn'] == 0:
-        possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
+        back = possibleDirs.index(bad_directions[snake_direction(my_snake)])
+        del possibleDirs[back]
 
     print '*********'
     print "possible dirs without back"

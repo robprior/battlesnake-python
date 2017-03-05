@@ -90,7 +90,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': random.choice[tList],
+        'taunt': random.choice(tList),
         'head_url': head_url,
         'name': 'longCat',
         'tail_type': "curled",
@@ -121,7 +121,7 @@ def move():
     if data['turn'] == 0:
         return {
             'move': random.choice(directions),
-            'taunt': random.choice[tList]
+            'taunt': random.choice(tList)
         }
 
 
@@ -142,7 +142,7 @@ def move():
     
     return {
         'move': move,
-        'taunt': random.choice[tList]
+        'taunt': random.choice(tList)
     }
 
 #board

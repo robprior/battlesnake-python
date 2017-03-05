@@ -153,7 +153,7 @@ def move():
 
     moveDir = moveto.index(SAFETY)
     move = directions(moveDir)
-        return {
+    return {
         'move': move,
         'taunt': random.choice(tList)
     }

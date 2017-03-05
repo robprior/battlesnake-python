@@ -107,90 +107,57 @@ def move():
     
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
-
-
+    
+    
     # if we are travelling in direction 'key' then we cannot go directon 'value'
     # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
     bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
-
+    
     my_snake, board = parseBoard(data)
-
     possibleDirs = copy.deepcopy(directions)
-    #if data['turn'] == 0:
-    #    return {
-    #        'move': random.choice(directions),
-     #       'taunt': random.choice(tList)
-     #   }
-
-
-    # = random.choice(directions)
     ourCoords = my_snake['coords']
-
-    for row in board:
-        print row
-
-    print '*********'
-    print "Our coords"
-
-    ourCoords = ourCoords[0]
-
-    print ourCoords
     
     # testing finding the head
-    board[ourCoords[1]][ourCoords[0]] = '*'
-
+    #board[ourCoords[0]][ourCoords[0]] = '*'
+    
     for row in board:
         print row
-
-    #move = random.choice(directions)
-
-    print '*********'
-    print "possible dirs"
-
-    print possibleDirs
-
+    
     # make a new list from the old list (both called possibleDirs)
     # only re add items to the list if it is not a bad direction
-    if not data['turn'] == 0:
-        back = possibleDirs.index(bad_directions[snake_direction(my_snake)])
-        del possibleDirs[back]
-
-    print '*********'
-    print "possible dirs without back"
-
-    print possibleDirs
-
-    # check over the remaining directions
-    for dirs in possibleDirs:
-        if dirs == 'left':
-            newPos = ourCoords[1] - 1
-            if newPos < 0 or board[newPos][ourCoords[0]] == 1:
-               del dirs
-        elif dirs == 'right':
-            newPos = ourCoords[1] + 1
-            if newPos >= data['width'] or board[newPos][ourCoords[0]] == 1:
-               del dirs
-        elif dirs == 'up':
-            newPos = ourCoords[0] - 1
-            if newPos < 0 or board[ourCoords[1]][newPos] == 1:
-               del dirs
-        elif dirs == 'down':
-            newPos = ourCoords[0] + 1
-            if newPos < 0 or board[ourCoords[1]][newPos] == 1:
-               del dirs
-    #while move == bad_directions[snake_direction(my_snake)]:
-        #move = random.choice(directions)
-
-    # TODO if len(possibleDirs) > 1 then we need heuristics
-    if possibleDirs:
-        move = possibleDirs[0]
-    else:
-        move = random.choice(directions)
+    #possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
     
-    return {
+    moveto = [SAFETY, SAFETY, SAFETY, SAFETY]
+    # Up
+    if board[my_snake['coord'][0][0]][my_snake['coord'][0][1] - 1] is SNAKE:
+        moveto[0] = SNAKE
+    # Down
+    elif board[my_snake['coord'][0][0]][my_snake['coord'][0][1]+ 1] is SNAKE:
+        moveto[1] = SNAKE
+    # Left
+    elif board[my_snake['coord'][0][0] - 1 ][my_snake['coord'][0][1]+ 1] is SNAKE:
+        moveto[2] = SNAKE
+    # Right
+    elif board[my_snake['coord'][0][0] + 1 ][my_snake['coord'][0][1]+ 1] is SNAKE:
+        moveto[3] = SNAKE
+
+    if my_snake['coord'][0][1] - 1 < 0:
+        moveto[0] = WALL
+    elif my_snake['coord'][0][1] + 1 > board_height - 1:
+        moveto[1] = WALL
+    elif my_snake['coord'][0][0] - 1 < 0:
+        moveto[2] = WALL
+    elif my_snake['coord'][0][0] + 1 > board_width - 1:
+        moveto[3] = WALL
+
+
+    moveDir = moveto.index(SAFETY)
+    move = directions(moveDir)
+        return {
         'move': move,
         'taunt': random.choice(tList)
     }
+
 
 #board
 def makeboard(rows, cols):

@@ -127,6 +127,14 @@ def move():
     # = random.choice(directions)    
 
     ourCoords = my_snake['coords']
+
+    for row in board:
+        print row
+
+    print '*********'
+    print "Our coords"
+
+    print ourCoords
     
     # testing finding the head
     board[ourCoords[1]][ourCoords[0]] = '*'

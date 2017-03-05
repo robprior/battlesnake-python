@@ -6,7 +6,7 @@ sys.path.append('/usr/local/lib/python3.6/site-packages')
 import bottle
 import os
 import random
-import 
+import copy
 
 tList = [ 'Cash meowside how bout dat',
 				'Cash meowside how bout dat',
@@ -14,11 +14,11 @@ tList = [ 'Cash meowside how bout dat',
 				'Are you fur-real ?',
 				'For a mewment like this, some people wait a lifetime',
 				'Paw-lease',
-				'I’ve cat to say, I’m not feline that way',
+				'Ive cat to say, Im not feline that way',
 				'No need to have a hissy fit',
-				'You’re pawful',
-				'Let’s purrtend that never happened',
-				'I don’t like your cattitude',
+				'Youre pawful',
+				'Lets purrtend that never happened',
+				'I dont like your cattitude',
 				'Your pissing meowff',
 				'Happy Caturday']
 
@@ -34,15 +34,19 @@ def wall_protection(data):
     elif my_snake['coord'][0][0] == data['height'] or my_snake['coord'][0][0] == -data['height']:
         # Move left or right
 
-def readBoard(data):
+def parseBoard(data):
+    my_snake = {}
     board = [[0 for col in xrange(data['width'])] for row in xrange(data['height'])]
     for snake in data['snakes']:
+        if snake['id'] == data['you']:
+            my_snake = snake
         for co in snake['coords']:
             board[co[1]][co[0]] = SNAKE
     for kibble in data['food']:
          board[kibble[1]][kibble[0]] = FOOD
-    for row in board:
-        print row
+    #for row in board:
+    #    print row
+    return my_snake, board
 
 
 def find_food(data):
@@ -101,8 +105,6 @@ def start():
 def move():
     
     data = bottle.request.json
-
-    readBoard(data)
     
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
@@ -112,33 +114,60 @@ def move():
     # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
     bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
 
-    my_snake = {}
-    for snake in data['snakes']:
-        if snake['id'] == data['you']:
-            my_snake = snake
-            break
+    my_snake, board = parseBoard(data)
 
-    if data['turn'] == 0:
-        return {
-            'move': random.choice(directions),
-            'taunt': random.choice(tList)
-        }
+    possibleDirs = copy.deepcopy(directions)
+    #if data['turn'] == 0:
+    #    return {
+    #        'move': random.choice(directions),
+     #       'taunt': random.choice(tList)
+     #   }
 
 
-    move = random.choice(directions)    
+    # = random.choice(directions)    
 
+    ourCoords = my_snake['coords']
     
+    # testing finding the head
+    board[ourCoords[1]][ourCoords[0]] = '*'
 
-    move = random.choice(directions)
+    for row in board:
+        print row
 
-    while move == bad_directions[snake_direction(my_snake)]:
+    #move = random.choice(directions)
+
+    # make a new list from the old list (both called possibleDirs)
+    # only re add items to the list if it is not a bad direction
+    possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
+
+    ourCoords = my_snake['coords']
+
+    # check over the remaining directions
+    for dirs in possibleDirs:
+        if dirs == 'left':
+            newPos = ourCoord[1] - 1
+            if newPos < 0 || board[newPos][ourCoords[0]] == 1:
+               del dirs
+        elif dirs == 'right':
+            newPos = ourCoord[1] + 1
+            if newPos >= data['width'] || board[newPos][ourCoords[0]] == 1:
+               del dirs
+        elif dirs == 'up':
+            newPos = ourCoord[0] - 1
+            if newPos < 0 || board[ourCoords[1]][newPos] == 1:
+               del dirs
+        elif dirs == 'down':
+            newPos = ourCoord[0] + 1
+            if newPos < 0 || board[ourCoords[1]][newPos] == 1:
+               del dirs
+    #while move == bad_directions[snake_direction(my_snake)]:
+        #move = random.choice(directions)
+
+    # TODO if len(possibleDirs) > 1 then we need heuristics
+    if possibleDirs not None:
+        move = possibleDirs[0]
+    elif
         move = random.choice(directions)
-
-    moves = random.shuffle(directions)
-    if moves[0] == bad_directions[snake_direction(my_snake)]:
-        del moves[0]
-
-
     
     return {
         'move': move,

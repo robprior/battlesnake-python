@@ -26,12 +26,12 @@ tList = [ 'Cash meowside how bout dat',
 
 SNAKE = 1
 FOOD  = 2
-def wall_protection(data):
+#def wall_protection(data):
     # If we are heading towards right or left wall.
-    if my_snake['coord'][0][0] == data['width'] or my_snake['coord'][0][0] == -data['width']:
+    #if my_snake['coord'][0][0] == data['width'] or my_snake['coord'][0][0] == -data['width']:
         # Move up or down
     # If we are heading towards the top or bottom wall
-    elif my_snake['coord'][0][0] == data['height'] or my_snake['coord'][0][0] == -data['height']:
+    #elif my_snake['coord'][0][0] == data['height'] or my_snake['coord'][0][0] == -data['height']:
         # Move left or right
 
 def parseBoard(data):

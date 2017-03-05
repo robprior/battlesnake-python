@@ -123,8 +123,7 @@ def move():
      #   }
 
 
-    # = random.choice(directions)    
-
+    # = random.choice(directions)
     ourCoords = my_snake['coords']
 
     for row in board:

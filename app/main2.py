@@ -10,7 +10,7 @@ import random
 SNAKE = 1
 FOOD  = 2
 SAFETY = 3
-DANGER = 4
+WALL = 4
 
 def wall_protection(data):
     # If we are heading towards right or left wall.
@@ -79,51 +79,85 @@ def start():
 @bottle.post('/move')
 def move():
     
+    
     data = bottle.request.json
-
-    readBoard(data)
     
     # TODO: Do things with data and stuff for this test commit and now I changed it again
     directions = ['up', 'down', 'left', 'right']
-
-
+    
+    
     # if we are travelling in direction 'key' then we cannot go directon 'value'
     # ie bad_directions['up'] = 'down' -- we cannot go back the direction we came from
     bad_directions = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
-
-    my_snake = {}
-    for snake in data['snakes']:
-        if snake['id'] == data['you']:
-            my_snake = snake
-            break
-
-    if data['turn'] == 0:
-        return {
-            'move': random.choice(directions),
-            'taunt': 'For a mewment like this, some people wait a lifetime'
-        }
-
-
-    move = random.choice(directions)    
-
     
+    my_snake, board = parseBoard(data)
+    possibleDirs = copy.deepcopy(directions)
+    ourCoords = my_snake['coords']
+    
+    # testing finding the head
+    #board[ourCoords[0]][ourCoords[0]] = '*'
+    
+    for row in board:
+        print row
+    
+    # make a new list from the old list (both called possibleDirs)
+    # only re add items to the list if it is not a bad direction
+    #possibleDirs = [direc for direc in possibleDirs if not bad_directions[snake_direction(my_snake)]]
+    
+    moveto = [SAFETY, SAFETY, SAFETY, SAFETY]
+    # Up
+    if board[my_snake['coord'][0][0]][my_snake['coord'][0][1] - 1] is SNAKE:
+        moveto[0] = SNAKE
+    # Down
+    elif board[my_snake['coord'][0][0]][my_snake['coord'][0][1]+ 1] is SNAKE:
+        moveto[1] = SNAKE
+    # Left
+    elif board[my_snake['coord'][0][0] - 1 ][my_snake['coord'][0][1]+ 1] is SNAKE:
+        moveto[2] = SNAKE
+    # Right
+    elif board[my_snake['coord'][0][0] + 1 ][my_snake['coord'][0][1]+ 1] is SNAKE:
+        moveto[3] = SNAKE
 
-    move = random.choice(directions)
+    if my_snake['coord'][0][1] - 1 < 0:
+        moveto[0] = WALL
+    elif my_snake['coord'][0][1] + 1 > board_height - 1:
+        moveto[1] = WALL
+    elif my_snake['coord'][0][0] - 1 < 0:
+        moveto[2] = WALL
+    elif my_snake['coord'][0][0] + 1 > board_width - 1:
+        moveto[3] = WALL
 
-    while move == bad_directions[snake_direction(my_snake)]:
+
+    # check over the remaining directions
+    for dirs in possibleDirs:
+        if dirs == 'left':
+            newPos = ourCoord[1] - 1
+            if newPos < 0 or board[newPos][ourCoords[0]] == 1:
+                del dirs
+        elif dirs == 'right':
+            newPos = ourCoord[1] + 1
+            if newPos >= data['width'] or board[newPos][ourCoords[0]] == 1:
+                del dirs
+        elif dirs == 'up':
+            newPos = ourCoord[0] - 1
+            if newPos < 0 or board[ourCoords[1]][newPos] == 1:
+                del dirs
+        elif dirs == 'down':
+            newPos = ourCoord[0] + 1
+            if newPos < 0 or board[ourCoords[1]][newPos] == 1:
+                del dirs
+    #while move == bad_directions[snake_direction(my_snake)]:
+    #move = random.choice(directions)
+
+    # TODO if len(possibleDirs) > 1 then we need heuristics
+    if possibleDirs not None:
+        move = possibleDirs[0]
+    elif
         move = random.choice(directions)
 
-    moves = random.shuffle(directions)
-    if moves[0] == bad_directions[snake_direction(my_snake)]:
-        del moves[0]
-
-
-    
     return {
         'move': move,
-        'taunt': "Youve cat to be kitten me right meow"
-    }
-
+        'taunt': random.choice(tList)
 #board
 def makeboard(rows, cols):
     board = []

@@ -7,7 +7,6 @@ import bottle
 import os
 import random
 
-
 SNAKE = 1
 FOOD  = 2
 SAFETY = 3
@@ -29,10 +28,6 @@ def readBoard(data, snake):
          board[kibble[1]][kibble[0]] = FOOD
     for row in board:
         print row
-
-
-def hunt_food(board):
-
 
 def snake_length(snake):
     return len(snake.coords)

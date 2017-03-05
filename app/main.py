@@ -164,7 +164,7 @@ def move():
         #move = random.choice(directions)
 
     # TODO if len(possibleDirs) > 1 then we need heuristics
-    if possibleDirs not None:
+    if possibleDirs:
         move = possibleDirs[0]
     elif
         move = random.choice(directions)
